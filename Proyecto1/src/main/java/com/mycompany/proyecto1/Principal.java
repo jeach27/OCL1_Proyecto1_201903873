@@ -2,7 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package mycompany.proyecto1;
+package com.mycompany.proyecto1;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -28,23 +35,31 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        Pestanias = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        PanelGraficas = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        Consola = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        ButtonNew = new javax.swing.JMenuItem();
+        ButtonAbrir = new javax.swing.JMenuItem();
+        ButtonSave = new javax.swing.JMenuItem();
+        ButtonPestanias = new javax.swing.JMenu();
+        ButtonGuardarP = new javax.swing.JMenuItem();
+        ButtonEliminarP = new javax.swing.JMenuItem();
+        ButtonEjecutar = new javax.swing.JMenu();
+        Reportes = new javax.swing.JMenu();
+        ReporteTokens = new javax.swing.JMenuItem();
+        ReporteErrores = new javax.swing.JMenuItem();
+        ReporteSimbolos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("COMPI1");
@@ -55,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jTabbedPane1.addTab("Principal", jScrollPane2);
+        Pestanias.addTab("Principal", jScrollPane2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -64,7 +79,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                    .addComponent(Pestanias, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -74,19 +89,19 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1))
+                .addComponent(Pestanias))
         );
 
         jLabel3.setText("GRAFICAS");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PanelGraficasLayout = new javax.swing.GroupLayout(PanelGraficas);
+        PanelGraficas.setLayout(PanelGraficasLayout);
+        PanelGraficasLayout.setHorizontalGroup(
+            PanelGraficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PanelGraficasLayout.setVerticalGroup(
+            PanelGraficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
         );
 
@@ -110,7 +125,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(PanelGraficas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
@@ -121,7 +136,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelGraficas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -131,10 +146,10 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setText("CONSOLA");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        Consola.setEditable(false);
+        Consola.setColumns(20);
+        Consola.setRows(5);
+        jScrollPane1.setViewportView(Consola);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -160,16 +175,53 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Archivo");
+
+        ButtonNew.setText("Nuevo Archivo");
+        ButtonNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonNewActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ButtonNew);
+
+        ButtonAbrir.setText("Abrir Archivo");
+        ButtonAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAbrirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ButtonAbrir);
+
+        ButtonSave.setText("Guardar ");
+        jMenu1.add(ButtonSave);
+
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Pestañas");
-        jMenuBar1.add(jMenu2);
+        ButtonPestanias.setText("Pestañas");
 
-        jMenu3.setText("Ejecutar");
-        jMenuBar1.add(jMenu3);
+        ButtonGuardarP.setText("Guardar");
+        ButtonPestanias.add(ButtonGuardarP);
 
-        jMenu4.setText("Reporte");
-        jMenuBar1.add(jMenu4);
+        ButtonEliminarP.setText("Eliminar");
+        ButtonPestanias.add(ButtonEliminarP);
+
+        jMenuBar1.add(ButtonPestanias);
+
+        ButtonEjecutar.setText("Ejecutar");
+        jMenuBar1.add(ButtonEjecutar);
+
+        Reportes.setText("Reporte");
+
+        ReporteTokens.setText("Tokens");
+        Reportes.add(ReporteTokens);
+
+        ReporteErrores.setText("Errores");
+        Reportes.add(ReporteErrores);
+
+        ReporteSimbolos.setText("Tabla de Simbolos");
+        Reportes.add(ReporteSimbolos);
+
+        jMenuBar1.add(Reportes);
 
         setJMenuBar(jMenuBar1);
 
@@ -202,10 +254,37 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Boton para regresar en las graficas
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    //Boton para agregar una nueva pestaña en el area de Entrada
+    private void ButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewActionPerformed
+        
+    }//GEN-LAST:event_ButtonNewActionPerformed
+    //Boton para abrir un archivo existente .df
+    private void ButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAbrirActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("DF(.df)", "df");
+        fileChooser.setFileFilter(filtroImagen);
+        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.showSaveDialog(null);
+
+        try {
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            File f = fileChooser.getSelectedFile();
+            BufferedReader bf = new BufferedReader(new FileReader(f));
+            String LineFile = bf.readLine();
+            while (LineFile != null) {
+                
+
+            }
+        } catch (IOException e) {
+        }
+        
+    }//GEN-LAST:event_ButtonAbrirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,32 +314,38 @@ public class Principal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Principal().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ButtonAbrir;
+    private javax.swing.JMenu ButtonEjecutar;
+    private javax.swing.JMenuItem ButtonEliminarP;
+    private javax.swing.JMenuItem ButtonGuardarP;
+    private javax.swing.JMenuItem ButtonNew;
+    private javax.swing.JMenu ButtonPestanias;
+    private javax.swing.JMenuItem ButtonSave;
+    private javax.swing.JTextArea Consola;
+    private javax.swing.JPanel PanelGraficas;
+    private javax.swing.JTabbedPane Pestanias;
+    private javax.swing.JMenuItem ReporteErrores;
+    private javax.swing.JMenuItem ReporteSimbolos;
+    private javax.swing.JMenuItem ReporteTokens;
+    private javax.swing.JMenu Reportes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
