@@ -4,11 +4,16 @@
  */
 package com.mycompany.proyecto1;
 
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,12 +23,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author jeach
  */
 public class Principal extends javax.swing.JFrame {
-
+    
+    public List<File> listaA = new ArrayList<>();
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        
     }
 
     /**
@@ -43,8 +50,8 @@ public class Principal extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         PanelGraficas = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        ButtonAnterior = new javax.swing.JButton();
+        ButtonSiguiente = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -107,14 +114,14 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 250, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Anterior");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ButtonAnterior.setText("Anterior");
+        ButtonAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ButtonAnteriorActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Siguiente");
+        ButtonSiguiente.setText("Siguiente");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -124,9 +131,9 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ButtonAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ButtonSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(PanelGraficas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -141,8 +148,8 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(PanelGraficas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(ButtonAnterior)
+                    .addComponent(ButtonSiguiente))
                 .addContainerGap())
         );
 
@@ -195,13 +202,28 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(ButtonAbrir);
 
         ButtonSave.setText("Guardar ");
+        ButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSaveActionPerformed(evt);
+            }
+        });
         jMenu1.add(ButtonSave);
 
         jMenuBar1.add(jMenu1);
 
         ButtonPestanias.setText("Pestañas");
+        ButtonPestanias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonPestaniasActionPerformed(evt);
+            }
+        });
 
-        ButtonGuardarP.setText("Guardar");
+        ButtonGuardarP.setText("Guardar Como");
+        ButtonGuardarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonGuardarPActionPerformed(evt);
+            }
+        });
         ButtonPestanias.add(ButtonGuardarP);
 
         ButtonEliminarP.setText("Eliminar");
@@ -258,15 +280,35 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     //Boton para regresar en las graficas
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void ButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAnteriorActionPerformed
     
+    }//GEN-LAST:event_ButtonAnteriorActionPerformed
     //Boton para agregar una nueva pestaña en el area de Entrada
     private void ButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewActionPerformed
         JTextArea textArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
-        Pestanias.addTab("NewA", scrollPane);
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("DF(.df)", "df");
+        fileChooser.setFileFilter(filtroImagen);
+        fileChooser.setDialogTitle("Specify file name and location");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToCreate = fileChooser.getSelectedFile();
+            try {
+                if (!fileToCreate.createNewFile()) {
+                    JOptionPane.showMessageDialog(this, "File could not be created", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "File created successfully: " + fileToCreate.getAbsolutePath(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                    Pestanias.addTab(fileToCreate.getName() , scrollPane);
+                    listaA.add(fileToCreate);
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_ButtonNewActionPerformed
     //Boton para abrir un archivo existente .df
     private void ButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAbrirActionPerformed
@@ -278,17 +320,58 @@ public class Principal extends javax.swing.JFrame {
 
         try {
             String path = fileChooser.getSelectedFile().getAbsolutePath();
+            listaA.add(fileChooser.getSelectedFile());
             File f = fileChooser.getSelectedFile();
             BufferedReader bf = new BufferedReader(new FileReader(f));
             String LineFile = bf.readLine();
             while (LineFile != null) {
-                
-
+                if(jTextArea2.getText().length() == 0){
+                    jTextArea2.append(LineFile + "\n");
+                    LineFile = bf.readLine();
+                }else{
+                    JTextArea textArea = new JTextArea();
+                    JScrollPane scrollPane = new JScrollPane(textArea);
+                    Pestanias.addTab(f.getName(), scrollPane);
+                    textArea.append(LineFile + "\n");
+                    LineFile = bf.readLine();
+                }   
             }
         } catch (IOException e) {
         }
         
     }//GEN-LAST:event_ButtonAbrirActionPerformed
+
+    private void ButtonPestaniasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPestaniasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ButtonPestaniasActionPerformed
+
+    private void ButtonGuardarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGuardarPActionPerformed
+        try {
+            JFileChooser archivo = new JFileChooser(System.getProperty("user.dir"));
+            FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("DF(.df)", "df");
+            archivo.setFileFilter(filtroImagen);
+            archivo.showSaveDialog(this);
+            if (archivo.getSelectedFile() != null) {
+                try (FileWriter guardado = new FileWriter(archivo.getSelectedFile())) {
+                    Component aux = Pestanias.getSelectedComponent();
+                    if (aux instanceof JScrollPane) {
+                        // Get the JTextArea inside the JScrollPane
+                        JTextArea selectedTextArea = (JTextArea) ((JScrollPane) aux).getViewport().getView();
+                        guardado.write(selectedTextArea.getText());
+                        Pestanias.remove(aux);
+                    }
+                    
+                    JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_ButtonGuardarPActionPerformed
+
+    private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ButtonSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,12 +408,14 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ButtonAbrir;
+    private javax.swing.JButton ButtonAnterior;
     private javax.swing.JMenu ButtonEjecutar;
     private javax.swing.JMenuItem ButtonEliminarP;
     private javax.swing.JMenuItem ButtonGuardarP;
     private javax.swing.JMenuItem ButtonNew;
     private javax.swing.JMenu ButtonPestanias;
     private javax.swing.JMenuItem ButtonSave;
+    private javax.swing.JButton ButtonSiguiente;
     private javax.swing.JTextArea Consola;
     private javax.swing.JPanel PanelGraficas;
     private javax.swing.JTabbedPane Pestanias;
@@ -338,8 +423,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ReporteSimbolos;
     private javax.swing.JMenuItem ReporteTokens;
     private javax.swing.JMenu Reportes;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
