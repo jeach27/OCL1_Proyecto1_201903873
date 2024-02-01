@@ -45,8 +45,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         Pestanias = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         PanelGraficas = new javax.swing.JPanel();
@@ -74,12 +72,6 @@ public class Principal extends javax.swing.JFrame {
         setTitle("COMPI1");
 
         jLabel2.setText("ENTRADA");
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-
-        Pestanias.addTab("Principal", jScrollPane2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -288,17 +280,20 @@ public class Principal extends javax.swing.JFrame {
         JTextArea textArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
         JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("DF(.df)", "df");
-        fileChooser.setFileFilter(filtroImagen);
         fileChooser.setDialogTitle("Specify file name and location");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
         int userSelection = fileChooser.showSaveDialog(this);
-
+        
+        
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToCreate = fileChooser.getSelectedFile();
+            String path = fileToCreate.getAbsolutePath();
+            if (!path.endsWith(".df")) {
+                path += ".df";
+            }
             try {
-                if (!fileToCreate.createNewFile()) {
+                if (!new File(path).createNewFile()) {
                     JOptionPane.showMessageDialog(this, "File could not be created", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "File created successfully: " + fileToCreate.getAbsolutePath(), "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -315,7 +310,7 @@ public class Principal extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("DF(.df)", "df");
         fileChooser.setFileFilter(filtroImagen);
-        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.setDialogTitle("Specify a file");
         fileChooser.showSaveDialog(null);
 
         try {
@@ -325,16 +320,15 @@ public class Principal extends javax.swing.JFrame {
             BufferedReader bf = new BufferedReader(new FileReader(f));
             String LineFile = bf.readLine();
             while (LineFile != null) {
-                if(jTextArea2.getText().length() == 0){
-                    jTextArea2.append(LineFile + "\n");
-                    LineFile = bf.readLine();
-                }else{
-                    JTextArea textArea = new JTextArea();
-                    JScrollPane scrollPane = new JScrollPane(textArea);
-                    Pestanias.addTab(f.getName(), scrollPane);
-                    textArea.append(LineFile + "\n");
-                    LineFile = bf.readLine();
-                }   
+                JTextArea textArea = new JTextArea();
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                String name = f.getName();
+                if (name.endsWith(".df")) {
+                    name = name.substring(0, name.length()-3);
+                }
+                Pestanias.addTab(name, scrollPane);
+                textArea.append(LineFile + "\n");
+                LineFile = bf.readLine();   
             }
         } catch (IOException e) {
         }
@@ -346,26 +340,32 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonPestaniasActionPerformed
 
     private void ButtonGuardarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGuardarPActionPerformed
-        try {
-            JFileChooser archivo = new JFileChooser(System.getProperty("user.dir"));
-            FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("DF(.df)", "df");
-            archivo.setFileFilter(filtroImagen);
-            archivo.showSaveDialog(this);
-            if (archivo.getSelectedFile() != null) {
-                try (FileWriter guardado = new FileWriter(archivo.getSelectedFile())) {
-                    Component aux = Pestanias.getSelectedComponent();
-                    if (aux instanceof JScrollPane) {
-                        // Get the JTextArea inside the JScrollPane
-                        JTextArea selectedTextArea = (JTextArea) ((JScrollPane) aux).getViewport().getView();
-                        guardado.write(selectedTextArea.getText());
-                        Pestanias.remove(aux);
-                    }
-                    
-                    JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
-                }
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save file");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("df", "df"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String fileName = fileToSave.getAbsolutePath();
+
+            if (!fileName.endsWith(".df")) {
+                fileName += ".df";
             }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+
+            try (FileWriter fileWriter = new FileWriter(fileName)) {
+                Component aux = Pestanias.getSelectedComponent();
+                if (aux instanceof JScrollPane) {
+                    // Get the JTextArea inside the JScrollPane
+                    JTextArea selectedTextArea = (JTextArea) ((JScrollPane) aux).getViewport().getView();
+                    fileWriter.write(selectedTextArea.getText());
+                    Pestanias.remove(aux);
+                }
+                JOptionPane.showMessageDialog(this, "File saved successfully: " + fileName, "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_ButtonGuardarPActionPerformed
 
@@ -432,7 +432,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
