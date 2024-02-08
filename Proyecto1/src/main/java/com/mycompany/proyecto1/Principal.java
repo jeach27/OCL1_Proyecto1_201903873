@@ -338,7 +338,7 @@ public class Principal extends javax.swing.JFrame {
     private void ButtonPestaniasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPestaniasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonPestaniasActionPerformed
-
+    //Boton para guardar como Pestanias 
     private void ButtonGuardarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGuardarPActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save file");
@@ -368,9 +368,9 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_ButtonGuardarPActionPerformed
-
+    //Boton para guardar archivos ya existentes
     private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSaveActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_ButtonSaveActionPerformed
 
     /**
