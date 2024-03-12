@@ -1,10 +1,11 @@
+
 package Analizadores;
 
 //importaciones si fuese necesario
 
 import java_cup.runtime.Symbol;
 import java.util.LinkedList;
-import proyecto.Principal;
+import proyecto1.Principal;
 import Errores.ErroresL;
 
 //codigo de la clase parser

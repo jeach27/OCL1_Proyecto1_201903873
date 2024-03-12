@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyecto;
+package proyecto1;
 
 import java.awt.Component;
 import java.io.BufferedReader;
@@ -436,8 +436,9 @@ public class Principal extends javax.swing.JFrame {
             System.out.println("Error en parser");
         }
         
-        for (int i = 0; i < Prints.size(); i++) {
-            Consola.append(Prints.get(i).toString());
+        int tam = Prints.size();
+        for (int i = 0; i < tam; i++) {
+            Consola.append(Prints.get(i).toString() + "\n");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

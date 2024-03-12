@@ -5,7 +5,7 @@
 //------> Paquetes,importaciones
 package Analizadores;
 import Errores.ErroresL;
-import proyecto.Principal;
+import proyecto1.Principal;
 import Objetos.Token;
 import java_cup.runtime.Symbol;
 import javax.swing.JOptionPane;
@@ -93,6 +93,9 @@ EspaciosB = [\ \r\t\f\n]+
 ")"         { Token nuevo = new Token(yytext(), "CierraParentesis", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" CierraP"); return new Symbol(sym.CierraP, yycolumn, yyline, yytext()); }
+"\""         { Token nuevo = new Token(yytext(), "Comillas", yyline,yycolumn);
+              Principal.ListaTokens.add(nuevo);
+              System.out.println("Reconocio "+yytext()+" Comillas"); return new Symbol(sym.Comillas, yycolumn, yyline, yytext()); }
  
 //-----> Palabras reservadas
 

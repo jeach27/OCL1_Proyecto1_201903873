@@ -9,7 +9,7 @@
 //------> Paquetes,importaciones
 package Analizadores;
 import Errores.ErroresL;
-import proyecto.Principal;
+import proyecto1.Principal;
 import Objetos.Token;
 import java_cup.runtime.Symbol;
 import javax.swing.JOptionPane;
@@ -68,23 +68,23 @@ public class scanner implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3\1\1\1\4\1\5\1\1"+
-    "\1\6\1\7\1\1\1\10\1\11\1\12\1\13\1\14"+
-    "\1\15\1\16\15\1\1\17\1\20\16\21\2\3\2\0"+
-    "\1\10\26\0\25\21\1\22\1\0\1\23\3\0\1\24"+
-    "\2\0\1\25\4\0\1\26\1\0\1\27\1\30\1\31"+
-    "\2\0\1\32\1\33\2\0\1\34\1\23\3\21\1\24"+
-    "\2\21\1\25\4\21\1\26\1\21\1\27\1\30\1\31"+
-    "\2\21\1\32\1\33\2\21\1\34\1\0\1\35\3\0"+
-    "\1\36\1\37\1\0\1\40\4\0\1\41\5\0\1\35"+
-    "\3\21\1\36\1\37\1\40\4\21\1\41\5\21\1\42"+
-    "\6\0\1\43\1\44\1\45\4\0\5\21\1\43\1\44"+
-    "\1\45\4\21\1\46\1\0\1\47\7\0\1\50\1\51"+
-    "\1\0\1\46\1\21\1\47\6\21\1\50\1\51\1\21"+
-    "\1\52\5\0\1\53\1\54\1\55\1\56\1\0\1\52"+
-    "\4\21\1\53\1\54\1\55\1\56\1\21\1\0\1\57"+
-    "\1\0\1\60\1\0\1\61\1\57\1\21\1\60\1\21"+
-    "\1\61\1\0\1\62\1\63\1\62\1\63\1\0\1\64";
+    "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\1"+
+    "\1\7\1\10\1\1\1\11\1\12\1\13\1\14\1\15"+
+    "\1\16\1\17\15\1\1\20\1\21\16\22\2\3\2\0"+
+    "\1\11\26\0\25\22\1\23\1\0\1\24\3\0\1\25"+
+    "\2\0\1\26\4\0\1\27\1\0\1\30\1\31\1\32"+
+    "\2\0\1\33\1\34\2\0\1\35\1\24\3\22\1\25"+
+    "\2\22\1\26\4\22\1\27\1\22\1\30\1\31\1\32"+
+    "\2\22\1\33\1\34\2\22\1\35\1\0\1\36\3\0"+
+    "\1\37\1\40\1\0\1\41\4\0\1\42\5\0\1\36"+
+    "\3\22\1\37\1\40\1\41\4\22\1\42\5\22\1\43"+
+    "\6\0\1\44\1\45\1\46\4\0\5\22\1\44\1\45"+
+    "\1\46\4\22\1\47\1\0\1\50\7\0\1\51\1\52"+
+    "\1\0\1\47\1\22\1\50\6\22\1\51\1\52\1\22"+
+    "\1\53\5\0\1\54\1\55\1\56\1\57\1\0\1\53"+
+    "\4\22\1\54\1\55\1\56\1\57\1\22\1\0\1\60"+
+    "\1\0\1\61\1\0\1\62\1\60\1\22\1\61\1\22"+
+    "\1\62\1\0\1\63\1\64\1\63\1\64\1\0\1\65";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[271];
@@ -902,362 +902,369 @@ public class scanner implements java_cup.runtime.Scanner {
                           err.SendError();
             }
           // fall through
-          case 53: break;
+          case 54: break;
           case 2:
             { /* Espacios en blanco, se ignoran */
             }
           // fall through
-          case 54: break;
+          case 55: break;
           case 3:
             { Token nuevo = new Token(yytext(), "Comentario Simple", yyline,yycolumn);
                         Principal.ListaTokens.add(nuevo);
                         System.out.println("Comentario: "+yytext());
             }
           // fall through
-          case 55: break;
+          case 56: break;
           case 4:
+            { Token nuevo = new Token(yytext(), "Comillas", yyline,yycolumn);
+              Principal.ListaTokens.add(nuevo);
+              System.out.println("Reconocio "+yytext()+" Comillas"); return new Symbol(sym.Comillas, yycolumn, yyline, yytext());
+            }
+          // fall through
+          case 57: break;
+          case 5:
             { Token nuevo = new Token(yytext(), "AbreParentesis", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" AbreP"); return new Symbol(sym.AbreP, yycolumn, yyline, yytext());
             }
           // fall through
-          case 56: break;
-          case 5:
+          case 58: break;
+          case 6:
             { Token nuevo = new Token(yytext(), "CierraParentesis", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" CierraP"); return new Symbol(sym.CierraP, yycolumn, yyline, yytext());
             }
           // fall through
-          case 57: break;
-          case 6:
+          case 59: break;
+          case 7:
             { Token nuevo = new Token(yytext(), "Coma", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" Coma"); return new Symbol(sym.Coma, yycolumn, yyline, yytext());
             }
           // fall through
-          case 58: break;
-          case 7:
+          case 60: break;
+          case 8:
             { Token nuevo = new Token(yytext(), "Guion", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" guion"); return new Symbol(sym.guion, yycolumn, yyline, yytext());
             }
           // fall through
-          case 59: break;
-          case 8:
+          case 61: break;
+          case 9:
             { Token nuevo = new Token(yytext(), "Doublee", yyline,yycolumn);
                Principal.ListaTokens.add(nuevo);
                System.out.println("Reconocio "+yytext()+" doublee"); return new Symbol(sym.doublee, yycolumn, yyline, yytext());
             }
           // fall through
-          case 60: break;
-          case 9:
+          case 62: break;
+          case 10:
             { Token nuevo = new Token(yytext(), "DosPuntos", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" DosPuntos"); return new Symbol(sym.DosPuntos, yycolumn, yyline, yytext());
             }
           // fall through
-          case 61: break;
-          case 10:
+          case 63: break;
+          case 11:
             { Token nuevo = new Token(yytext(), "PuntoComa", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" PuntoComa"); return new Symbol(sym.PuntoComa, yycolumn, yyline, yytext());
             }
           // fall through
-          case 62: break;
-          case 11:
+          case 64: break;
+          case 12:
             { Token nuevo = new Token(yytext(), "Menor", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" menor"); return new Symbol(sym.menor, yycolumn, yyline, yytext());
             }
           // fall through
-          case 63: break;
-          case 12:
+          case 65: break;
+          case 13:
             { Token nuevo = new Token(yytext(), "Igual", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" Igual"); return new Symbol(sym.Igual, yycolumn, yyline, yytext());
             }
           // fall through
-          case 64: break;
-          case 13:
+          case 66: break;
+          case 14:
             { Token nuevo = new Token(yytext(), "Mayor", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" mayor"); return new Symbol(sym.mayor, yycolumn, yyline, yytext());
             }
           // fall through
-          case 65: break;
-          case 14:
+          case 67: break;
+          case 15:
             { Token nuevo = new Token(yytext(), "Arroba", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" arroba"); return new Symbol(sym.arroba, yycolumn, yyline, yytext());
             }
           // fall through
-          case 66: break;
-          case 15:
+          case 68: break;
+          case 16:
             { Token nuevo = new Token(yytext(), "AbreCorchete", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" AbreC"); return new Symbol(sym.AbreC, yycolumn, yyline, yytext());
             }
           // fall through
-          case 67: break;
-          case 16:
+          case 69: break;
+          case 17:
             { Token nuevo = new Token(yytext(), "CierrraCorchete", yyline,yycolumn);
               Principal.ListaTokens.add(nuevo);
               System.out.println("Reconocio "+yytext()+" CierraC"); return new Symbol(sym.CierraC, yycolumn, yyline, yytext());
             }
           // fall through
-          case 68: break;
-          case 17:
+          case 70: break;
+          case 18:
             { Token nuevo = new Token(yytext(), "Identificador", yyline,yycolumn);
                Principal.ListaTokens.add(nuevo);
                System.out.println("Reconocio "+yytext()+" id"); return new Symbol(sym.id, yycolumn, yyline, yytext());
             }
           // fall through
-          case 69: break;
-          case 18:
+          case 71: break;
+          case 19:
             { Token nuevo = new Token(yytext(), "Cadena", yyline,yycolumn);
                Principal.ListaTokens.add(nuevo);
                System.out.println("Reconocio "+yytext()+" cadena"); return new Symbol(sym.cadena, yycolumn, yyline, yytext());
             }
           // fall through
-          case 70: break;
-          case 19:
+          case 72: break;
+          case 20:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" arr"); return new Symbol(sym.arr, yycolumn, yyline, yytext());
             }
           // fall through
-          case 71: break;
-          case 20:
+          case 73: break;
+          case 21:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" DIV"); return new Symbol(sym.DIV, yycolumn, yyline, yytext());
             }
           // fall through
-          case 72: break;
-          case 21:
+          case 74: break;
+          case 22:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" end"); return new Symbol(sym.end, yycolumn, yyline, yytext());
             }
           // fall through
-          case 73: break;
-          case 22:
+          case 75: break;
+          case 23:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" MAX"); return new Symbol(sym.max, yycolumn, yyline, yytext());
             }
           // fall through
-          case 74: break;
-          case 23:
+          case 76: break;
+          case 24:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" MIN"); return new Symbol(sym.min, yycolumn, yyline, yytext());
             }
           // fall through
-          case 75: break;
-          case 24:
+          case 77: break;
+          case 25:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" MOD"); return new Symbol(sym.MOD, yycolumn, yyline, yytext());
             }
           // fall through
-          case 76: break;
-          case 25:
+          case 78: break;
+          case 26:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" MUL"); return new Symbol(sym.MUL, yycolumn, yyline, yytext());
             }
           // fall through
-          case 77: break;
-          case 26:
+          case 79: break;
+          case 27:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" RES"); return new Symbol(sym.RES, yycolumn, yyline, yytext());
             }
           // fall through
-          case 78: break;
-          case 27:
+          case 80: break;
+          case 28:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" SUM"); return new Symbol(sym.SUM, yycolumn, yyline, yytext());
             }
           // fall through
-          case 79: break;
-          case 28:
+          case 81: break;
+          case 29:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" var"); return new Symbol(sym.var, yycolumn, yyline, yytext());
             }
           // fall through
-          case 80: break;
-          case 29:
+          case 82: break;
+          case 30:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" charr"); return new Symbol(sym.charr, yycolumn, yyline, yytext());
             }
           // fall through
-          case 81: break;
-          case 30:
+          case 83: break;
+          case 31:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" ejeX"); return new Symbol(sym.ejeX, yycolumn, yyline, yytext());
             }
           // fall through
-          case 82: break;
-          case 31:
+          case 84: break;
+          case 32:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" ejeY"); return new Symbol(sym.ejeY, yycolumn, yyline, yytext());
             }
           // fall through
-          case 83: break;
-          case 32:
+          case 85: break;
+          case 33:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" EXEC"); return new Symbol(sym.exec, yycolumn, yyline, yytext());
             }
           // fall through
-          case 84: break;
-          case 33:
+          case 86: break;
+          case 34:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Moda"); return new Symbol(sym.Moda, yycolumn, yyline, yytext());
             }
           // fall through
-          case 85: break;
-          case 34:
+          case 87: break;
+          case 35:
             { Token nuevo = new Token(yytext(), "Comentario Multi", yyline,yycolumn);
                         Principal.ListaTokens.add(nuevo);
                         System.out.println("Comentario: "+yytext());
             }
           // fall through
-          case 86: break;
-          case 35:
+          case 88: break;
+          case 36:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" label"); return new Symbol(sym.label, yycolumn, yyline, yytext());
             }
           // fall through
-          case 87: break;
-          case 36:
+          case 89: break;
+          case 37:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Media"); return new Symbol(sym.Media, yycolumn, yyline, yytext());
             }
           // fall through
-          case 88: break;
-          case 37:
+          case 90: break;
+          case 38:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" print"); return new Symbol(sym.print, yycolumn, yyline, yytext());
             }
           // fall through
-          case 89: break;
-          case 38:
+          case 91: break;
+          case 39:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" column"); return new Symbol(sym.column, yycolumn, yyline, yytext());
             }
           // fall through
-          case 90: break;
-          case 39:
+          case 92: break;
+          case 40:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" doubleee"); return new Symbol(sym.doubleee, yycolumn, yyline, yytext());
             }
           // fall through
-          case 91: break;
-          case 40:
+          case 93: break;
+          case 41:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Titulo"); return new Symbol(sym.titulo, yycolumn, yyline, yytext());
             }
           // fall through
-          case 92: break;
-          case 41:
+          case 94: break;
+          case 42:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" values"); return new Symbol(sym.values, yycolumn, yyline, yytext());
             }
           // fall through
-          case 93: break;
-          case 42:
+          case 95: break;
+          case 43:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Console"); return new Symbol(sym.Console, yycolumn, yyline, yytext());
             }
           // fall through
-          case 94: break;
-          case 43:
+          case 96: break;
+          case 44:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Mediana"); return new Symbol(sym.Mediana, yycolumn, yyline, yytext());
             }
           // fall through
-          case 95: break;
-          case 44:
+          case 97: break;
+          case 45:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Program"); return new Symbol(sym.Program, yycolumn, yyline, yytext());
             }
           // fall through
-          case 96: break;
-          case 45:
+          case 98: break;
+          case 46:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" tituloX"); return new Symbol(sym.tituloX, yycolumn, yyline, yytext());
             }
           // fall through
-          case 97: break;
-          case 46:
+          case 99: break;
+          case 47:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" tituloY"); return new Symbol(sym.tituloY, yycolumn, yyline, yytext());
             }
           // fall through
-          case 98: break;
-          case 47:
+          case 100: break;
+          case 48:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" graphBar"); return new Symbol(sym.graphBar, yycolumn, yyline, yytext());
             }
           // fall through
-          case 99: break;
-          case 48:
+          case 101: break;
+          case 49:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" graphPie"); return new Symbol(sym.graphPie, yycolumn, yyline, yytext());
             }
           // fall through
-          case 100: break;
-          case 49:
+          case 102: break;
+          case 50:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Varianza"); return new Symbol(sym.varianza, yycolumn, yyline, yytext());
             }
           // fall through
-          case 101: break;
-          case 50:
+          case 103: break;
+          case 51:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" graphLine"); return new Symbol(sym.graphLine, yycolumn, yyline, yytext());
             }
           // fall through
-          case 102: break;
-          case 51:
+          case 104: break;
+          case 52:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" Histogram"); return new Symbol(sym.Histogram, yycolumn, yyline, yytext());
             }
           // fall through
-          case 103: break;
-          case 52:
+          case 105: break;
+          case 53:
             { Token nuevo = new Token(yytext(), "Palabra Reservada", yyline,yycolumn);
                 Principal.ListaTokens.add(nuevo);
                 System.out.println("Reconocio "+yytext()+" End Program"); return new Symbol(sym.endProgram, yycolumn, yyline, yytext());
             }
           // fall through
-          case 104: break;
+          case 106: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
