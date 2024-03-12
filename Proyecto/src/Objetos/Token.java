@@ -2,32 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Errores;
+package Objetos;
 
 /**
  *
  * @author jeach
  */
-public class ErroresL {
+public class Token {
+    String Lexema;
     String tipo;
-    String caracter;
     int fila;
     int columna;
     
-    public ErroresL(String tipo, String caracter,int fila,int columna) {
+    public Token(String lexema, String tipo,int fila,int columna) {
+        this.Lexema = lexema;
         this.tipo = tipo;
-        this.caracter = caracter;
         this.fila = fila;
         this.columna = columna;
     }
     
-    public void SendError(){
-        System.out.println("Hubo un error de  tipo" + tipo);
-        System.out.println("No se esparaba el caracter" + caracter);
-        System.out.println("En la fila" + fila);
-        System.out.println("En la columna" + columna);
-    }
-
     public String getTipo() {
         return tipo;
     }
@@ -36,12 +29,12 @@ public class ErroresL {
         this.tipo = tipo;
     }
 
-    public String getDescripcion() {
-        return caracter;
+    public String getLexema() {
+        return Lexema;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.caracter = descripcion;
+    public void setLexema(String lexema) {
+        this.Lexema = lexema;
     }
 
     public int getFila() {
@@ -59,4 +52,5 @@ public class ErroresL {
     public void setColumna(int columna) {
         this.columna = columna;
     }
+    
 }

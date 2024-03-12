@@ -11,12 +11,23 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.PrintWriter;
+import java.io.StringReader;
+
+import Errores.ErroresL;
+import Objetos.Token;
+import Objetos.Simbolo;
+import Analizadores.parser;
+import Analizadores.scanner;
+import java.awt.Desktop;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -24,7 +35,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Principal extends javax.swing.JFrame {
     
-    public List<File> listaA = new ArrayList<>();
+    public ArrayList<File> listaA = new ArrayList<>();
+    public static ArrayList<ErroresL> ListaErrores = new ArrayList<>();
+    public static ArrayList<Token> ListaTokens = new ArrayList<>();
+    public static ArrayList<Simbolo> ListaSimbolos = new ArrayList<>();
+    
+    public static ArrayList<Object> Prints = new ArrayList<Object>();
     /**
      * Creates new form Principal
      */
@@ -45,6 +61,8 @@ public class Principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         Pestanias = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         PanelGraficas = new javax.swing.JPanel();
@@ -58,11 +76,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         ButtonNew = new javax.swing.JMenuItem();
         ButtonAbrir = new javax.swing.JMenuItem();
-        ButtonSave = new javax.swing.JMenuItem();
         ButtonPestanias = new javax.swing.JMenu();
         ButtonGuardarP = new javax.swing.JMenuItem();
         ButtonEliminarP = new javax.swing.JMenuItem();
         ButtonEjecutar = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         Reportes = new javax.swing.JMenu();
         ReporteTokens = new javax.swing.JMenuItem();
         ReporteErrores = new javax.swing.JMenuItem();
@@ -72,6 +90,12 @@ public class Principal extends javax.swing.JFrame {
         setTitle("COMPI1");
 
         jLabel2.setText("ENTRADA");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        Pestanias.addTab("tab1", jScrollPane2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,14 +217,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(ButtonAbrir);
 
-        ButtonSave.setText("Guardar ");
-        ButtonSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonSaveActionPerformed(evt);
-            }
-        });
-        jMenu1.add(ButtonSave);
-
         jMenuBar1.add(jMenu1);
 
         ButtonPestanias.setText("Pestañas");
@@ -224,17 +240,46 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(ButtonPestanias);
 
         ButtonEjecutar.setText("Ejecutar");
+        ButtonEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonEjecutarActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Ejecutar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        ButtonEjecutar.add(jMenuItem1);
+
         jMenuBar1.add(ButtonEjecutar);
 
         Reportes.setText("Reporte");
 
         ReporteTokens.setText("Tokens");
+        ReporteTokens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteTokensActionPerformed(evt);
+            }
+        });
         Reportes.add(ReporteTokens);
 
         ReporteErrores.setText("Errores");
+        ReporteErrores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteErroresActionPerformed(evt);
+            }
+        });
         Reportes.add(ReporteErrores);
 
         ReporteSimbolos.setText("Tabla de Simbolos");
+        ReporteSimbolos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteSimbolosActionPerformed(evt);
+            }
+        });
         Reportes.add(ReporteSimbolos);
 
         jMenuBar1.add(Reportes);
@@ -318,18 +363,19 @@ public class Principal extends javax.swing.JFrame {
             listaA.add(fileChooser.getSelectedFile());
             File f = fileChooser.getSelectedFile();
             BufferedReader bf = new BufferedReader(new FileReader(f));
-            String LineFile = bf.readLine();
-            while (LineFile != null) {
-                JTextArea textArea = new JTextArea();
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                String name = f.getName();
-                if (name.endsWith(".df")) {
-                    name = name.substring(0, name.length()-3);
-                }
-                Pestanias.addTab(name, scrollPane);
-                textArea.append(LineFile + "\n");
-                LineFile = bf.readLine();   
+            String name = f.getName();
+            if (name.endsWith(".df")) {
+                name = name.substring(0, name.length()-3);
             }
+            
+            String line;
+            StringBuilder text = new StringBuilder();
+            while ((line = bf.readLine()) != null) {
+                text.append(line).append("\n");
+            }
+            JTextArea textArea = new JTextArea(text.toString());
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            Pestanias.addTab(name, scrollPane);
         } catch (IOException e) {
         }
         
@@ -368,11 +414,215 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_ButtonGuardarPActionPerformed
-    //Boton para guardar archivos ya existentes
-    private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSaveActionPerformed
-       
-    }//GEN-LAST:event_ButtonSaveActionPerformed
 
+   
+    
+    private void ButtonEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEjecutarActionPerformed
+        
+    }//GEN-LAST:event_ButtonEjecutarActionPerformed
+    //Boton de Ejecutar en Consola
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        try{
+            Component selectedComponent = Pestanias.getSelectedComponent();
+
+            // Check if the selected component is a JPanel
+            if (selectedComponent instanceof JScrollPane) {
+                JTextArea selectedTextArea = (JTextArea) ((JScrollPane) selectedComponent).getViewport().getView();
+                
+                scanner sintac = new scanner(new BufferedReader(new StringReader(selectedTextArea.getText())));
+                parser par = new parser(sintac);
+                par.parse();  
+            }
+  
+        }catch(Exception e){
+            System.out.println("Error en parser");
+        }
+        
+        for (int i = 0; i < Prints.size(); i++) {
+            Consola.append(Prints.get(i).toString());
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    //Boton para Reporte de Tokens
+    private void ReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteTokensActionPerformed
+        try {
+            generarReporteTokens();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_ReporteTokensActionPerformed
+
+    //Boton para Reporte de Errores
+    private void ReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteErroresActionPerformed
+        try {
+            generarReporteErrores();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_ReporteErroresActionPerformed
+    
+    //Boton para Reporte de Simbolos
+    private void ReporteSimbolosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteSimbolosActionPerformed
+        try {
+            generarReporteSimbolos();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_ReporteSimbolosActionPerformed
+    
+    public static void generarReporteErrores() throws IOException{
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            String path = "ReporteErrores.html";
+            fichero = new FileWriter(path);
+            pw = new PrintWriter(fichero);
+            //comenzamos a escribir el html
+            pw.println("<html>");
+            pw.println("<head><title>REPORTE DE ERRORES"
+                    + "</title></head>");
+            pw.println("<body>");
+            pw.println("<div align=\"center\">");
+            pw.println("<h1>REPORTE DE ERRORES</h1>");
+            pw.println("<br></br>");
+            pw.println("<table border=1>");
+            pw.println("<tr>");
+            pw.println("<td>NO.</td>");
+            pw.println("<td>TIPO</td>");
+            pw.println("<td>DESCRIPCION</td>");
+            pw.println("<td>FILA</td>");
+            pw.println("<td>COLUMNA</td>");
+            pw.println("</tr>");
+            for (int i = 0; i < ListaErrores.size(); i++) {
+                pw.println("<tr>");
+                pw.println("<td>" + i + "</td>");
+                pw.println("<td>" + ListaErrores.get(i).getTipo() + "</td>");
+                pw.println("<td>" + ListaErrores.get(i).getDescripcion() + "</td>");
+                pw.println("<td>" + ListaErrores.get(i).getFila() + "</td>");
+                pw.println("<td>" + ListaErrores.get(i).getColumna() + "</td>");
+                pw.println("</tr>");
+            }
+            pw.println("</table>");
+            pw.println("</div");
+            pw.println("</body>");
+            pw.println("</html>");
+            //Desktop.getDesktop().open(new File(path));
+        } catch (Exception e) {
+        } finally {
+            if (null != fichero) {
+                fichero.close();
+            }
+        }
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void generarReporteTokens() throws IOException {
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            String path = "ReporteToken.html";
+            fichero = new FileWriter(path);
+            pw = new PrintWriter(fichero);
+            //comenzamos a escribir el html
+            pw.println("<html>");
+            pw.println("<head><title>REPORTE DE TOKENS"
+                    + "</title></head>");
+            pw.println("<body>");
+            pw.println("<div align=\"center\">");
+            pw.println("<h1>REPORTE DE TOKENS</h1>");
+            pw.println("<br></br>");
+            pw.println("<table border=1>");
+            pw.println("<tr>");
+            pw.println("<td>NO.</td>");
+            pw.println("<td>LEXEMA</td>");
+            pw.println("<td>TIPO</td>");
+            pw.println("<td>FILA</td>");
+            pw.println("<td>COLUMNA</td>");
+            pw.println("</tr>");
+            for (int i = 0; i < ListaTokens.size(); i++) {
+                pw.println("<tr>");
+                pw.println("<td>" + i + "</td>");
+                pw.println("<td>" + ListaTokens.get(i).getLexema() + "</td>");
+                pw.println("<td>" + ListaTokens.get(i).getTipo() + "</td>");
+                pw.println("<td>" + ListaTokens.get(i).getFila() + "</td>");
+                pw.println("<td>" + ListaTokens.get(i).getColumna() + "</td>");
+                pw.println("</tr>");
+            }
+            pw.println("</table>");
+            pw.println("</div");
+            pw.println("</body>");
+            pw.println("</html>");
+            //Desktop.getDesktop().open(new File(path));
+        } catch (Exception e) {
+        } finally {
+            if (null != fichero) {
+                fichero.close();
+            }
+        }
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void generarReporteSimbolos() throws IOException{
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            String path = "TablaSimbolos.html";
+            fichero = new FileWriter(path);
+            pw = new PrintWriter(fichero);
+            //comenzamos a escribir el html
+            pw.println("<html>");
+            pw.println("<head><title>TABLA DE SIMBOLOS"
+                    + "</title></head>");
+            pw.println("<body>");
+            pw.println("<div align=\"center\">");
+            pw.println("<h1>TABLA DE SIMBOLOS</h1>");
+            pw.println("<br></br>");
+            pw.println("<table border=1>");
+            pw.println("<tr>");
+            pw.println("<td>NO.</td>");
+            pw.println("<td>NOMBRE</td>");
+            pw.println("<td>TIPO</td>");
+            pw.println("<td>VALOR</td>");
+            pw.println("<td>FILA</td>");
+            pw.println("<td>COLUMNA</td>");
+            pw.println("</tr>");
+            for (int i = 0; i < ListaSimbolos.size(); i++) {
+                pw.println("<tr>");
+                pw.println("<td>" + i + "</td>");
+                pw.println("<td>" + ListaSimbolos.get(i).getNombre() + "</td>");
+                pw.println("<td>" + ListaSimbolos.get(i).getTipo() + "</td>");
+                pw.println("<td>" + ListaSimbolos.get(i).getValor() + "</td>");
+                pw.println("<td>" + ListaSimbolos.get(i).getFila() + "</td>");
+                pw.println("<td>" + ListaSimbolos.get(i).getColumna() + "</td>");
+                pw.println("</tr>");
+            }
+            pw.println("</table>");
+            pw.println("</div");
+            pw.println("</body>");
+            pw.println("</html>");
+            //Desktop.getDesktop().open(new File(path));
+        } catch (Exception e) {
+        } finally {
+            if (null != fichero) {
+                fichero.close();
+            }
+        }
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -414,7 +664,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ButtonGuardarP;
     private javax.swing.JMenuItem ButtonNew;
     private javax.swing.JMenu ButtonPestanias;
-    private javax.swing.JMenuItem ButtonSave;
     private javax.swing.JButton ButtonSiguiente;
     private javax.swing.JTextArea Consola;
     private javax.swing.JPanel PanelGraficas;
@@ -428,9 +677,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

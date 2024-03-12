@@ -1,0 +1,90 @@
+package Analizadores;
+
+//importaciones si fuese necesario
+
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+import proyecto.Principal;
+import Errores.ErroresL;
+
+//codigo de la clase parser
+parser code 
+{:
+ 
+    public void syntax_error(Symbol s){
+        System.out.println("Error Sintactico Recuperable");
+        ErroresL nuevo = new ErroresL("Error Sintactico", s.value.toString(), s.right+1, s.left+1);
+        Principal.ListaErrores.add(nuevo);
+    }
+
+    public void unrecovered_syntax_error(Symbol s){
+        System.out.println("Error Sintactico no recuperable");
+        ErroresL nuevo = new ErroresL("Error Sintactico", s.value.toString(), s.right+1, s.left+1);
+        Principal.ListaErrores.add(nuevo);
+    }
+:}
+
+action code
+{:
+    String codigoUsr="";
+:}
+
+terminal DosPuntos, menor, mayor, guion, PuntoComa, AbreC, CierraC, arroba, Coma, AbreP, CierraP, Igual, Comillas;
+terminal Program, endProgram, var, end, doubleee, charr, arr;
+terminal SUM, RES, MUL, DIV, MOD, Media, Mediana, Moda, varianza, max, min, Console, print;
+terminal column, exec, graphBar, graphPie, graphLine, Histogram, values, label, titulo, ejeX, ejeY, tituloX, tituloY;
+terminal cadena, doublee, id;
+
+nonterminal String INICIO;
+nonterminal Imprimir, Operaciones;
+nonterminal DeclaracionDou, DeclaracionCha, DeclaracionAr, TipoAr, TipoArD, TipoArC;
+nonterminal ImpresionP, TipoImpresionP;
+nonterminal TodoTipo;
+
+
+start with INICIO;
+
+INICIO ::= Program TodoTipo endProgram
+{:RESULT = codigoUsr; :} 
+;
+
+TodoTipo ::= DeclaracionDou TodoTipo
+          | DeclaracionCha TodoTipo
+          | DeclaracionAr TodoTipo
+          | ImpresionP
+;
+
+DeclaracionDou ::= var DosPuntos doubleee DosPuntos DosPuntos id menor guion doublee:e end PuntoComa
+{: System.out.println(e);:}
+;
+
+DeclaracionCha ::= var DosPuntos charr AbreC CierraC DosPuntos DosPuntos id menor guion cadena:c end PuntoComa
+{: System.out.println(c);:}
+;
+
+DeclaracionAr ::= arr DosPuntos TipoAr end PuntoComa
+;
+
+TipoAr ::= doubleee DosPuntos DosPuntos arroba id menor guion AbreC TipoArD CierraC 
+        | charr DosPuntos DosPuntos arroba id menor guion AbreC TipoArC CierraC     
+;
+
+TipoArD ::= doublee:b Coma TipoArD
+         | doublee:b
+;
+TipoArC ::= cadena:b Coma TipoArC
+         | cadena:b
+;
+
+ImpresionP ::= Console DosPuntos DosPuntos print Igual TipoImpresionP end PuntoComa
+;
+
+TipoImpresionP ::= doublee:b Coma TipoImpresionP {: Principal.Prints.add(b);:}
+                 | cadena:b Coma TipoImpresionP  {: Principal.Prints.add(b);:}  
+                 | id:b Coma TipoImpresionP      {: Principal.Prints.add(b);:}  
+                 | doublee:b                     {: Principal.Prints.add(b);:} 
+                 | cadena:b                      {: Principal.Prints.add(b);:}
+                 | id:b                          {: Principal.Prints.add(b);:}
+;
+
+

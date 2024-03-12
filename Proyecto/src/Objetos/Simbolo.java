@@ -2,32 +2,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Errores;
+package Objetos;
 
 /**
  *
  * @author jeach
  */
-public class ErroresL {
+public class Simbolo {
+    String Nombre;
     String tipo;
-    String caracter;
+    String Valor;
     int fila;
     int columna;
     
-    public ErroresL(String tipo, String caracter,int fila,int columna) {
+    public Simbolo(String nombre, String tipo, String valor ,int fila,int columna) {
+        this.Nombre = nombre;
         this.tipo = tipo;
-        this.caracter = caracter;
+        this.Valor = valor;
         this.fila = fila;
         this.columna = columna;
     }
     
-    public void SendError(){
-        System.out.println("Hubo un error de  tipo" + tipo);
-        System.out.println("No se esparaba el caracter" + caracter);
-        System.out.println("En la fila" + fila);
-        System.out.println("En la columna" + columna);
+    public String getNombre() {
+        return Nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.Nombre = nombre;
+    }
+    
     public String getTipo() {
         return tipo;
     }
@@ -35,13 +38,13 @@ public class ErroresL {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
-    public String getDescripcion() {
-        return caracter;
+    
+    public String getValor() {
+        return Valor;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.caracter = descripcion;
+    public void setValor(String valor) {
+        this.Valor = valor;
     }
 
     public int getFila() {
@@ -59,4 +62,5 @@ public class ErroresL {
     public void setColumna(int columna) {
         this.columna = columna;
     }
+    
 }
