@@ -22,8 +22,18 @@ import java.io.StringReader;
 import Errores.ErroresL;
 import Objetos.Token;
 import Objetos.Simbolo;
+import Objetos.graphBar;
+import Objetos.graphPie;
+import Objetos.Operaciones;
 import Analizadores.parser;
 import Analizadores.scanner;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 /**
@@ -38,6 +48,11 @@ public class Principal extends javax.swing.JFrame {
     public static ArrayList<Simbolo> ListaSimbolos = new ArrayList<>();
     
     public static ArrayList<Object> Prints = new ArrayList<>();
+    public static graphBar graphsB = new graphBar(null, null, null);
+    public static graphPie graphsP = new graphPie(null);
+    
+    public static ArrayList<String> varia = new ArrayList<>();
+    public static ArrayList<Operaciones> opera = new ArrayList<>();
     /**
      * Creates new form Principal
      */
@@ -440,6 +455,33 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < tam; i++) {
             Consola.append(Prints.get(i).toString() + "\n");
         }
+        
+        DefaultCategoryDataset datos = new DefaultCategoryDataset();
+        
+        datos.setValue(1,"mate","juan");
+        datos.setValue(3,"mate","pedro");
+        datos.setValue(1,"mate","pablo");
+        
+        JFreeChart grafBar = ChartFactory.createBarChart3D(
+                "Calificaciones",   //Nombre de Grafico
+                "Estudiantes Mate", //Nombre Barras o Columnas
+                "Calificacion",     //Nombre de la numeracion
+                datos,              //datos del grafico
+                PlotOrientation.VERTICAL,   // orientacion
+                true,                       // legenda de barras individuales
+                true,                       //Herramientas
+                false                       //url grafico
+        );
+        
+        ChartPanel panel = new ChartPanel(grafBar);
+        panel.setMouseWheelEnabled(true);
+        panel.setPreferredSize(new Dimension(400,200));
+        
+        PanelGraficas.setLayout(new BorderLayout());
+        PanelGraficas.add(panel, BorderLayout.NORTH);
+                
+        pack();
+        repaint();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     //Boton para Reporte de Tokens

@@ -17,10 +17,9 @@ public class graphPie {
     public ArrayList <String> values = new ArrayList<>();
     public ArrayList <String> labels = new ArrayList<>();
     
-    public graphPie(String titulo, ArrayList values, ArrayList labels) {
+    public graphPie(String titulo) {
         this.titulo = titulo;
-        this.values = values;
-        this.labels = labels;
+        
     }
     
     public String getTitulo() {

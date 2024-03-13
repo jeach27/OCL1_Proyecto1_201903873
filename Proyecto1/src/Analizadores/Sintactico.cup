@@ -7,6 +7,10 @@ import java_cup.runtime.Symbol;
 import java.util.LinkedList;
 import proyecto1.Principal;
 import Errores.ErroresL;
+import Objetos.Simbolo;
+import Objetos.graphBar;
+import Objetos.graphPie;
+import Objetos.Operaciones;
 
 //codigo de la clase parser
 parser code 
@@ -39,6 +43,7 @@ nonterminal String INICIO;
 nonterminal Imprimir, Operaciones;
 nonterminal DeclaracionDou, DeclaracionCha, DeclaracionAr, TipoAr, TipoArD, TipoArC;
 nonterminal ImpresionP, TipoImpresionP;
+nonterminal GraphBar, VariosBar, TipoArDB, TipoArCB;
 nonterminal GraphPie;
 nonterminal TodoTipo;
 
@@ -50,17 +55,33 @@ INICIO ::= Program TodoTipo endProgram
 ;
 
 TodoTipo ::= DeclaracionDou TodoTipo
+          | DeclaracionDou
           | DeclaracionCha TodoTipo
+          | DeclaracionCha
           | DeclaracionAr TodoTipo
+          | DeclaracionAr
+          | ImpresionP TodoTipo
           | ImpresionP
-          | GraphPie
+          | GraphPie TodoTipo
+          | GraphPie 
+          | GraphBar TodoTipo
+          | GraphBar 
+          | Operaciones TodoTipo
+          | Operaciones
 ;
 
-DeclaracionDou ::= var DosPuntos doubleee DosPuntos DosPuntos id menor guion doublee:e end PuntoComa
+Operaciones ::= var DosPuntos doubleee DosPuntos DosPuntos id menor guion SUM AbreP doublee:a Coma doublee:b CierraP end PuntoComa {: Operaciones op = new Operaciones("SUM",a,b); Principal.opera.add(op); :}
+             | var DosPuntos doubleee DosPuntos DosPuntos id menor guion RES AbreP doublee:a Coma doublee:b CierraP end PuntoComa {: Operaciones op = new Operaciones("RES",a,b); Principal.opera.add(op); :}
+             | var DosPuntos doubleee DosPuntos DosPuntos id menor guion MUL AbreP doublee:a Coma doublee:b CierraP end PuntoComa {: Operaciones op = new Operaciones("MUL",a,b); Principal.opera.add(op); :}
+             | var DosPuntos doubleee DosPuntos DosPuntos id menor guion DIV AbreP doublee:a Coma doublee:b CierraP end PuntoComa {: Operaciones op = new Operaciones("DIV",a,b); Principal.opera.add(op); :}
+             | var DosPuntos doubleee DosPuntos DosPuntos id menor guion MOD AbreP doublee:a Coma doublee:b CierraP end PuntoComa {: Operaciones op = new Operaciones("MOD",a,b); Principal.opera.add(op); :}
+; 
+
+DeclaracionDou ::= var DosPuntos doubleee DosPuntos DosPuntos id:a menor guion doublee:e end PuntoComa
 {: System.out.println(e);:}
 ;
 
-DeclaracionCha ::= var DosPuntos charr AbreC CierraC DosPuntos DosPuntos id menor guion cadena:c end PuntoComa
+DeclaracionCha ::= var DosPuntos charr AbreC CierraC DosPuntos DosPuntos id:a menor guion cadena:c end PuntoComa
 {: System.out.println(c);:}
 ;
 
@@ -68,12 +89,13 @@ DeclaracionAr ::= arr DosPuntos TipoAr end PuntoComa
 ;
 
 TipoAr ::= doubleee DosPuntos DosPuntos arroba id menor guion AbreC TipoArD CierraC 
-        | charr DosPuntos DosPuntos arroba id menor guion AbreC TipoArC CierraC     
+        | charr AbreC CierraC DosPuntos DosPuntos arroba id menor guion AbreC TipoArC CierraC     
 ;
 
 TipoArD ::= doublee:b Coma TipoArD
          | doublee:b
 ;
+
 TipoArC ::= cadena:b Coma TipoArC
          | cadena:b
 ;
@@ -87,6 +109,24 @@ TipoImpresionP ::= doublee:b Coma TipoImpresionP {: Principal.Prints.add(b);:}
                  | doublee:b                     {: Principal.Prints.add(b);:} 
                  | cadena:b                      {: Principal.Prints.add(b);:}
                  | id:b                          {: Principal.Prints.add(b);:}
+;
+
+GraphBar ::= graphBar AbreP VariosBar exec graphBar end PuntoComa CierraP end PuntoComa
+;
+
+VariosBar ::= titulo DosPuntos DosPuntos charr AbreC CierraC Igual cadena:b end PuntoComa
+            | ejeX DosPuntos DosPuntos charr AbreC CierraC Igual TipoArCB end PuntoComa
+            | ejeY DosPuntos DosPuntos doubleee AbreC CierraC Igual TipoArDB end PuntoComa
+            | tituloX DosPuntos DosPuntos charr AbreC CierraC Igual cadena:b end PuntoComa
+            | tituloY DosPuntos DosPuntos charr AbreC CierraC Igual cadena:b end PuntoComa
+;
+
+TipoArDB ::= doublee:b Coma TipoArD
+         | doublee:b
+;
+
+TipoArCB ::= cadena:b Coma TipoArC
+         | cadena:b
 ;
 
 
