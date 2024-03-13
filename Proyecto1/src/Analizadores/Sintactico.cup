@@ -39,6 +39,7 @@ nonterminal String INICIO;
 nonterminal Imprimir, Operaciones;
 nonterminal DeclaracionDou, DeclaracionCha, DeclaracionAr, TipoAr, TipoArD, TipoArC;
 nonterminal ImpresionP, TipoImpresionP;
+nonterminal GraphPie;
 nonterminal TodoTipo;
 
 
@@ -52,6 +53,7 @@ TodoTipo ::= DeclaracionDou TodoTipo
           | DeclaracionCha TodoTipo
           | DeclaracionAr TodoTipo
           | ImpresionP
+          | GraphPie
 ;
 
 DeclaracionDou ::= var DosPuntos doubleee DosPuntos DosPuntos id menor guion doublee:e end PuntoComa
